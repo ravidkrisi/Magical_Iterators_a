@@ -52,12 +52,16 @@ namespace ariel {
             // **** overload operators ****
             int& operator*(); // overload the dereference operator
             MagicalContainer::AscendingIterator& operator++ (); // overload the ++ operator
+            bool operator !=(const MagicalContainer::AscendingIterator& other) const; // overload inequality operator
+            bool operator ==(const MagicalContainer::AscendingIterator& other) const; // overload equality operator
+            bool operator <(const MagicalContainer::AscendingIterator& other) const; // overload comparison operator
+            bool operator >(const MagicalContainer::AscendingIterator& other) const; // overload comparison operator
+            MagicalContainer::AscendingIterator& operator =(const MagicalContainer::AscendingIterator& other); // overload assigment operator
+
 
             // **** declare functions ****
             MagicalContainer::AscendingIterator begin() const; // return asc_iterator that point to the beginning of the container
             MagicalContainer::AscendingIterator end() const; // return asc_iterator that point to the end of the container
-            bool operator !=(MagicalContainer::AscendingIterator& other) const; // overload inequality operator
-            bool operator ==(MagicalContainer::AscendingIterator& other) const; // overload equality operator
 
         };
 
@@ -76,12 +80,17 @@ namespace ariel {
             // **** overload operators ****
             int& operator*(); // overload the dereference operator
             MagicalContainer::SideCrossIterator& operator++ (); // overload the ++ operator
+            bool operator !=(const MagicalContainer::SideCrossIterator& other) const; // overload inequality operator
+            bool operator ==(const MagicalContainer::SideCrossIterator& other) const; // overload equality operator
+            bool operator <(const MagicalContainer::SideCrossIterator& other) const; // overload comparison operator
+            bool operator >(const MagicalContainer::SideCrossIterator& other) const; // overload comparison operator
+            MagicalContainer::SideCrossIterator& operator =(const MagicalContainer::SideCrossIterator& other); // overload assigment operator
+
 
             // **** declare functions ****
             MagicalContainer::SideCrossIterator begin() const; // return asc_iterator that point to the beginning of the container
             MagicalContainer::SideCrossIterator end() const; // return asc_iterator that point to the end of the container
-            bool operator !=(MagicalContainer::SideCrossIterator& other) const; // overload inequality operator
-            bool operator ==(MagicalContainer::SideCrossIterator& other) const; // overload equality operator
+
 
         };
 
@@ -99,15 +108,15 @@ namespace ariel {
             // **** overload operators ****
             int& operator*(); // overload the dereference operator
             MagicalContainer::PrimeIterator& operator++ (); // overload the ++ operator
+            bool operator !=(const MagicalContainer::PrimeIterator& other) const; // overload inequality operator
+            bool operator ==(const MagicalContainer::PrimeIterator& other) const; // overload equality operator
+            bool operator <(const MagicalContainer::PrimeIterator& other) const; // overload comparison operator
+            bool operator >(const MagicalContainer::PrimeIterator& other) const; // overload comparison operator
+            MagicalContainer::PrimeIterator& operator =(const MagicalContainer::PrimeIterator& other); // overload assigment operator
 
             // **** declare functions ****
             MagicalContainer::PrimeIterator begin() const; // return asc_iterator that point to the beginning of the container
             MagicalContainer::PrimeIterator end() const; // return asc_iterator that point to the end of the container
-            bool operator !=(MagicalContainer::PrimeIterator& other) const; // overload inequality operator
-            bool operator ==(MagicalContainer::PrimeIterator& other) const; // overload equality operator
-
-
-
         };
 
     };

@@ -74,15 +74,6 @@ namespace ariel
         {
             prime_container_.push_back(&asc_container_.back());
         }
-//        // update prime numbersContainer addresses after insertion
-//        std::size_t j=0;
-//        for (std::size_t i = 0; i < asc_container_.size()-1; ++i)
-//        {
-//            if (isPrime_(asc_container_.at(i)))
-//            {
-//                prime_container_.at(j++) = &asc_container_.at(i);
-//            }
-//        }
         updatePrimeAddress_();
     }
       /**
@@ -127,17 +118,21 @@ namespace ariel
     }
 
     /**
-     * function to erase element from all container if found
+     * @brief function to erase element from all container if found
      * @param element to be deleted
      */
     void MagicalContainer::removeElement(int element)
     {
-        // check if element exist in containers. then remove it
-        if (container_.count(element) > 0)
+        // check if element exist in containers. then remove it. else throw runtime error
+        if (container_.count(element) > 0) // element exit
         {
             container_.erase(element); // erase element from container
             removeSortedElement_(element); // remove element from sortedContainer
             removePrimeElement_(element); // remove element from primeContainer
+        }
+        else // element not exist
+        {
+            throw std::runtime_error("cant remove non-existing element");
         }
     }
 
@@ -165,6 +160,8 @@ namespace ariel
      */
     MagicalContainer::AscendingIterator& MagicalContainer::AscendingIterator::operator++()
     {
+        // throw exception if increment over boundaries
+        if(end().index_ == index_) throw std::runtime_error("cant increment beyond boundaries");
         ++index_;
         return *this;
     }
@@ -174,7 +171,7 @@ namespace ariel
      * @param other reference to another iterator
      * @return bool that indicated if equality
      */
-    bool MagicalContainer::AscendingIterator::operator==(MagicalContainer::AscendingIterator &other) const
+    bool MagicalContainer::AscendingIterator::operator==(const MagicalContainer::AscendingIterator &other) const
     {
         return (index_ == other.index_);
     }
@@ -184,9 +181,44 @@ namespace ariel
      * @param other reference to another iterator
      * @return bool that indicated if inequality
      */
-    bool MagicalContainer::AscendingIterator::operator!=(MagicalContainer::AscendingIterator &other) const
+    bool MagicalContainer::AscendingIterator::operator!=(const MagicalContainer::AscendingIterator &other) const
     {
-        return (!(*this == other));
+        return !(*this == other);
+    }
+
+    /**
+     * @brief overload < comparison
+     * @param other reference for another iterator
+     * @return bool that indicate comparison
+     */
+    bool MagicalContainer::AscendingIterator::operator<(const MagicalContainer::AscendingIterator &other) const
+    {
+        return (this->index_ < other.index_);
+    }
+
+    /**
+     * @brief overload < comparison
+     * @param other reference for another iterator
+     * @return bool that indicate comparison
+     */
+    bool MagicalContainer::AscendingIterator::operator>(const MagicalContainer::AscendingIterator &other) const
+    {
+        return (this->index_ > other.index_);
+    }
+
+    /**
+     * @brief assign iterator overload
+     * @param other reference for another itertator
+     * @return
+     */
+    MagicalContainer::AscendingIterator& MagicalContainer::AscendingIterator::operator=(const MagicalContainer::AscendingIterator &other)
+    {
+        // check if containers are equal
+        if (container_.container_ != other.container_.container_) throw std::runtime_error("cant assign iterator on different container");
+
+        // containers are equal so assign index
+        index_ = other.index_;
+        return *this;
     }
 
     // **** define function ****
@@ -230,8 +262,11 @@ namespace ariel
      */
     MagicalContainer::SideCrossIterator& MagicalContainer::SideCrossIterator::operator++()
     {
+        // throw exception if increment over boundaries
+        if(end().index_ == index_) throw std::runtime_error("cant increment beyond boundaries");
+
         std::size_t mid_index = container_.getAscContainer().size()/2;
-        if (mid_index == index_) // if mid_index equal to index throw exception
+        if (mid_index == index_) // if mid_index equal to index icrement to end index
         {
             index_ = container_.getAscContainer().size();
         }
@@ -251,7 +286,7 @@ namespace ariel
      * @param other reference to another iterator
      * @return bool that indicated if equality
      */
-    bool MagicalContainer::SideCrossIterator::operator==(MagicalContainer::SideCrossIterator &other) const
+    bool MagicalContainer::SideCrossIterator::operator==(const MagicalContainer::SideCrossIterator &other) const
     {
         return (index_ == other.index_);
     }
@@ -261,10 +296,47 @@ namespace ariel
     * @param other reference to another iterator
     * @return bool that indicated if inequality
     */
-    bool MagicalContainer::SideCrossIterator::operator!=(MagicalContainer::SideCrossIterator &other) const
+    bool MagicalContainer::SideCrossIterator::operator!=(const MagicalContainer::SideCrossIterator &other) const
     {
         return (!(*this == other));
     }
+
+    /**
+     * @brief overload < comparison
+     * @param other reference for another iterator
+     * @return bool that indicate comparison
+     */
+    bool MagicalContainer::SideCrossIterator::operator<(const MagicalContainer::SideCrossIterator &other) const
+    {
+        return (this->index_ < other.index_);
+    }
+
+    /**
+     * @brief overload < comparison
+     * @param other reference for another iterator
+     * @return bool that indicate comparison
+     */
+    bool MagicalContainer::SideCrossIterator::operator>(const MagicalContainer::SideCrossIterator &other) const
+    {
+        return (this->index_ > other.index_);
+    }
+
+
+    /**
+     * @brief assign iterator overload
+     * @param other reference for another itertator
+     * @return
+     */
+    MagicalContainer::SideCrossIterator& MagicalContainer::SideCrossIterator::operator=(const MagicalContainer::SideCrossIterator &other)
+    {
+        // check if containers are equal
+        if (container_.container_ != other.container_.container_) throw std::runtime_error("cant assign iterator on different container");
+
+        // containers are equal so assign index
+        index_ = other.index_;
+        return *this;
+    }
+
 
     // **** define function ****
     /**
@@ -311,6 +383,9 @@ namespace ariel
      */
     MagicalContainer::PrimeIterator &MagicalContainer::PrimeIterator::operator++()
     {
+        // throw exception if increment over boundaries
+        if(end().index_ == index_) throw std::runtime_error("cant increment beyond boundaries");
+
         ++index_;
         return *this;
     }
@@ -320,7 +395,7 @@ namespace ariel
      * @param other reference for other primeIterator
      * @return bool that indicated if iterator at the same index
      */
-    bool MagicalContainer::PrimeIterator::operator==(MagicalContainer::PrimeIterator &other) const
+    bool MagicalContainer::PrimeIterator::operator==(const MagicalContainer::PrimeIterator &other) const
     {
         return (this->index_ == other.index_);
     }
@@ -330,9 +405,44 @@ namespace ariel
      * @param other reference for other primeIterator
      * @return bool that indicated if iterator not at the same index
      */
-    bool MagicalContainer::PrimeIterator::operator!=(MagicalContainer::PrimeIterator &other) const
+    bool MagicalContainer::PrimeIterator::operator!=(const MagicalContainer::PrimeIterator &other) const
     {
-        return (*this == other);
+        return !(*this == other);
+    }
+
+    /**
+     * @brief overload < comparison
+     * @param other reference for another iterator
+     * @return bool that indicate comparison
+     */
+    bool MagicalContainer::PrimeIterator::operator<(const MagicalContainer::PrimeIterator &other) const
+    {
+        return (this->index_ < other.index_);
+    }
+
+    /**
+     * @brief overload < comparison
+     * @param other reference for another iterator
+     * @return bool that indicate comparison
+     */
+    bool MagicalContainer::PrimeIterator::operator>(const MagicalContainer::PrimeIterator &other) const
+    {
+        return (this->index_ > other.index_);
+    }
+
+    /**
+     * @brief assign iterator overload
+     * @param other reference for another itertator
+     * @return
+     */
+    MagicalContainer::PrimeIterator& MagicalContainer::PrimeIterator::operator=(const MagicalContainer::PrimeIterator &other)
+    {
+        // check if containers are equal
+        if (container_.container_ != other.container_.container_) throw std::runtime_error("cant assign iterator on different container");
+
+        // containers are equal so assign index
+        index_ = other.index_;
+        return *this;
     }
 
     /**
