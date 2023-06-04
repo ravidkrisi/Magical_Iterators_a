@@ -33,7 +33,7 @@ int main() {
     std::cout << "Prime numbers:\n";
     MagicalContainer::PrimeIterator primeIter(container);
     for (auto it = primeIter.begin(); it != primeIter.end(); ++it) {
-        std::cout << *it << ' ';  // 2 3 17 
+        std::cout << *it << ' ';  // 2 3 17
     }
     std::cout << std::endl;
 
@@ -41,5 +41,17 @@ int main() {
     container.removeElement(9);
     std::cout << "Size of container after removing an element: " << container.size() << std::endl;
 
+    // Use PrimeIterator to display prime numbers only
+    std::cout << "Prime numbers:\n";
+    for (auto it = primeIter.begin(); it != primeIter.end(); ++it) {
+        std::cout << *it << ' ';  // 2 3 17
+    }
+    std::cout << std::endl;
+
+    std::cout << "Elements in ascending order:\n";
+    for (auto it = ascIter.begin(); it != ascIter.end(); ++it) {
+        std::cout << *it << ' ';   // 2 3 9 17 25
+    }
+    std::cout << std::endl;
     return 0;
 }

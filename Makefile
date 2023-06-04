@@ -1,6 +1,7 @@
 #!make -f
 
-CXX=clang++-14
+#CXX=clang++-14
+CXX = g++
 CXXVERSION=c++2a
 SOURCE_PATH=sources
 OBJECT_PATH=objects
