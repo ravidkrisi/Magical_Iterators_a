@@ -93,13 +93,17 @@ namespace ariel
      */
     void MagicalContainer::removeSortedElement_(int element)
     {
-        auto it = std::find(asc_container_.begin(), asc_container_.end(), element); // find the element iterator if exist
+        // auto it = std::find(asc_container_.begin(), asc_container_.end(), element); // find the element iterator if exist
+        // for (auto itr = asc_container_.begin(); itr != asc_container_.end()
+        // {
 
+        // })
+        
         // check if iterator found, then delete from ascContainer
-        if (it != asc_container_.end())
-        {
-            asc_container_.erase(it);
-        }
+        // if (it != asc_container_.end())
+        // {
+        //     asc_container_.erase(it);
+        // }
     }
 
     /**
